@@ -12,7 +12,7 @@ namespace RoundTheClock.Core.Database
         public float Hours { get; set; }
         public string Project { get; set; }
         public string Task { get; set; }
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
 
         public static TimeEntryDAO Adapt(TimeEntry timeEntry)
@@ -23,8 +23,20 @@ namespace RoundTheClock.Core.Database
                 Hours = timeEntry.Hours,
                 Project = timeEntry.Project,
                 Task = timeEntry.Task,
-                Date = timeEntry.Date
+                Date = timeEntry.Date.ToString("yyyyMMdd")
             };
+        }
+
+        public static TimeEntry Adapt(TimeEntryDAO dao)
+        {
+            return new TimeEntry
+            {
+                Customer = dao.Customer,
+                Hours = dao.Hours,
+                Project = dao.Project,
+                Task = dao.Task,
+                Date = dao.Date
+            }; // fix the implementation and see if I can find stuff on best practice dao dapper
         }
     }
 }

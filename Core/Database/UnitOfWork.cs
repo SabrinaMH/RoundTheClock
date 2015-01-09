@@ -10,13 +10,11 @@ namespace RoundTheClock.Core.Database
 {
     public class UnitOfWork
     {
-        private readonly SQLiteConnection _sqliteConnection;
+        private readonly DbConnection _dbConnection;
 
         public UnitOfWork(string connectionString)
         {
-            var dbConnection = new DbConnection(connectionString);
-            _sqliteConnection = dbConnection.Connection;
-            _sqliteConnection.Open();
+            _dbConnection = new DbConnection(connectionString);
         }
 
         /// <summary>
@@ -24,13 +22,25 @@ namespace RoundTheClock.Core.Database
         /// </summary>
         public List<TimeEntry> FindUncommittedByCustomer(CustomerEnum customer)
         {
-            DateTime lastCommitted = _sqliteConnection.ExecuteScalar<DateTime>("Select max(Date) from " + customer);
-
+            using (var conn = _dbConnection.Connection)
+            {
+                var customerAsString = Enum.GetName(typeof(CustomerEnum), customer);
+                return conn.Query<TimeEntryDAO>(
+                    "Select * from " + DbConnection.TimeEntryTable +
+                    " where `Date` > (select max(Date) from " + customerAsString + ")" +
+                    " and `Customer` = '" + customerAsString + "'").ToList();
+            }
         }
 
         public int Insert(List<TimeEntry> entries)
         {
-
+            using (var conn = _dbConnection.Connection)
+            {
+                return conn.Execute(
+                    "Insert into " + DbConnection.TimeEntryTable +
+                    " values (@Project, @Task, @Hours, @Date, @Customer)",
+                    entries.Select(entry => TimeEntryDAO.Adapt(entry)));
+            }
         }
     }
 }
