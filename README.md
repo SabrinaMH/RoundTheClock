@@ -1,4 +1,0 @@
-RoundTheClock
-=============
-
-Time registration application
