@@ -70,6 +70,7 @@ namespace RoundTheClock.UnitTests
 
         public void SetUpTables()
         {
+            ClearTables(); // In case I stop debugging when an exception is thrown, the tables aren't cleaned up.
             var customer = "EnergiMidt";
             var timeEntries = new List<TimeEntry> {
                 new TimeEntry { Project = "EnergiMidt", Task = "Nyt website - MitEnergiMidt.dk", Hours = 1, Date = DateTime.Parse("2014-12-01"), Customer = CustomerEnum.EnergiMidt },
@@ -89,7 +90,7 @@ namespace RoundTheClock.UnitTests
                 conn.Execute("INSERT INTO " + DbConnection.TimeEntryTable + 
                     "(Project, Task, Hours, Date, Customer) VALUES (@Project, @Task, @Hours, @Date, @Customer)", 
                     timeEntries.Select(entry => TimeEntryDAO.Adapt(entry)));
-
+                
                 conn.Execute("Insert into " + customer + 
                     "(Project, Task, Date) VALUES (@Project, @Task, @Date)", 
                     customerEntries.Select(entry => TimeEntryDAO.Adapt(entry)));            

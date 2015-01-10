@@ -24,6 +24,7 @@ namespace RoundTheClock.Core.Database
         {
             using (var conn = _dbConnection.Connection)
             {
+                conn.Open();
                 var customerAsString = Enum.GetName(typeof(CustomerEnum), customer);
                 return conn.Query<TimeEntryDAO>(
                     String.Concat("Select * from ", DbConnection.TimeEntryTable,
@@ -34,13 +35,22 @@ namespace RoundTheClock.Core.Database
 
         public int Insert(List<TimeEntry> entries)
         {
+            int noRows = 0;
             using (var conn = _dbConnection.Connection)
             {
-                return conn.Execute(
-                    String.Concat("Insert into ", DbConnection.TimeEntryTable,
-                    " values (@Project, @Task, @Hours, @Date, @Customer)"),
-                    entries.Select(entry => TimeEntryDAO.Adapt(entry)));
+                conn.Open();
+                using (var transaction = conn.BeginTransaction())
+                {
+                    // If not specifying a transaction, Execute is non-atomic according to
+                    // https://code.google.com/p/dapper-dot-net/source/browse/Dapper/SqlMapper.cs?r=c9160c13fb45eb512f66524825612397aa3728ba
+                    noRows = conn.Execute(
+                        String.Concat("Insert into ", DbConnection.TimeEntryTable,
+                        "(Project, Task, Hours, Date, Customer) values (@Project, @Task, @Hours, @Date, @Customer)"),
+                        entries.Select(entry => TimeEntryDAO.Adapt(entry)), transaction);
+                    transaction.Commit();
+                }
             }
+            return noRows;
         }
     }
 }
