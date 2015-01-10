@@ -26,9 +26,9 @@ namespace RoundTheClock.Core.Database
             {
                 var customerAsString = Enum.GetName(typeof(CustomerEnum), customer);
                 return conn.Query<TimeEntryDAO>(
-                    "Select * from " + DbConnection.TimeEntryTable +
-                    " where `Date` > (select max(Date) from " + customerAsString + ")" +
-                    " and `Customer` = '" + customerAsString + "'").ToList();
+                    String.Concat("Select * from ", DbConnection.TimeEntryTable,
+                    " where `Date` > (select max(Date) from ", customerAsString, ")",
+                    " and `Customer` = '", customerAsString, "'")).Select(dao => TimeEntryDAO.Adapt(dao)).ToList();
             }
         }
 
@@ -37,8 +37,8 @@ namespace RoundTheClock.Core.Database
             using (var conn = _dbConnection.Connection)
             {
                 return conn.Execute(
-                    "Insert into " + DbConnection.TimeEntryTable +
-                    " values (@Project, @Task, @Hours, @Date, @Customer)",
+                    String.Concat("Insert into ", DbConnection.TimeEntryTable,
+                    " values (@Project, @Task, @Hours, @Date, @Customer)"),
                     entries.Select(entry => TimeEntryDAO.Adapt(entry)));
             }
         }

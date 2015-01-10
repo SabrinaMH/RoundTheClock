@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using RoundTheClock.Core.Model;
+using System.Globalization;
 
 namespace RoundTheClock.Core.Database
 {
@@ -13,7 +14,6 @@ namespace RoundTheClock.Core.Database
         public string Project { get; set; }
         public string Task { get; set; }
         public string Date { get; set; }
-
 
         public static TimeEntryDAO Adapt(TimeEntry timeEntry)
         {
@@ -31,12 +31,12 @@ namespace RoundTheClock.Core.Database
         {
             return new TimeEntry
             {
-                Customer = dao.Customer,
+                Customer = (CustomerEnum)Enum.Parse(typeof(CustomerEnum), dao.Customer, ignoreCase: true),
                 Hours = dao.Hours,
                 Project = dao.Project,
                 Task = dao.Task,
-                Date = dao.Date
-            }; // fix the implementation and see if I can find stuff on best practice dao dapper
+                Date = DateTime.ParseExact(dao.Date, "yyyyMMdd", CultureInfo.InvariantCulture)
+            }; 
         }
     }
 }
