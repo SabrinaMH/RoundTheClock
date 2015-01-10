@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Http.WebHost; // fucked up
+using System.Web.Http;
 
 namespace RoundTheClock.Core.App_Code
 {
@@ -10,7 +10,6 @@ namespace RoundTheClock.Core.App_Code
 	{		 
 		protected void Application_Start (Object sender, EventArgs e)
 		{
-
 			GlobalConfiguration.Configuration.Routes.MapHttpRoute("Default", 
 				"{controller}/{id}", 
 				new { id = RouteParameter.Optional });
