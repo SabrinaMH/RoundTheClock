@@ -3,12 +3,15 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 
 namespace RoundTheClock.Core.Logging
 {
     public class GlobalExceptionHandler : ExceptionHandler
     {
-        public override void HandleCore(System.Web.Http.ExceptionHandling.ExceptionHandlerContext context)
+        public GlobalExceptionHandler() { }
+
+        public override void Handle(ExceptionHandlerContext context)
         {
             context.Result = new GlobalException()
             {

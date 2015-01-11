@@ -9,6 +9,7 @@ using System.IO;
 using System.Globalization;
 using Dapper;
 using System.Linq;
+using RoundTheClock.Core.Repository;
 
 namespace RoundTheClock.UnitTests
 {

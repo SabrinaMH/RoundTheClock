@@ -136,7 +136,6 @@
     <Compile Include="Database\TimeEntryDAO.cs" />
     <Compile Include="Repository\UnitOfWork.cs" />
     <Compile Include="Helpers\ConnectionHelper.cs" />
-    <Compile Include="Logging\ExceptionHandler.cs" />
     <Compile Include="Logging\GlobalExceptionHandler.cs" />
     <Compile Include="Logging\GlobalExceptionLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
