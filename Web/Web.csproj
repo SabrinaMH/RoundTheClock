@@ -7,8 +7,8 @@
     <ProjectTypeGuids>{349C5851-65DF-11DA-9384-00065B846F21};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{621B740F-D0C0-4A4E-8093-54EF18FD2CD1}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Web</RootNamespace>
-    <AssemblyName>Web</AssemblyName>
+    <RootNamespace>RoundTheClock.Web</RootNamespace>
+    <AssemblyName>RoundTheClock.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>

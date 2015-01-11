@@ -1,4 +1,7 @@
-﻿using System;
+﻿using RoundTheClock.Core.Database;
+using RoundTheClock.Core.Model;
+using RoundTheClock.Core.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +11,12 @@ namespace RoundTheClock.Controllers
 {
     public class TimeEntriesController : ApiController
     {
-
+        public IHttpActionResult Post(IEnumerable<TimeEntry> entries)
+        {
+            var unitOfWork = new UnitOfWork(new DbConnection(Helpers.ConnectionHelper.ConnectionString));
+            var noRows = unitOfWork.Insert(entries);
+            return noRows == entries.Count() ? Ok() : Bad
+            }
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace RoundTheClock.Core.Database
 
         public SQLiteConnection Connection
         {
-            get { return _connectionString != null ? new SQLiteConnection("Data Source=" + Path.Combine(Environment.CurrentDirectory, _connectionString)) : null; }
+            get { return _connectionString != null ? new SQLiteConnection(_connectionString) : null; }
         }
 
         public static string TimeEntryTable

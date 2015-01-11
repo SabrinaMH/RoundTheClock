@@ -5,16 +5,17 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Web;
 using Dapper;
+using RoundTheClock.Core.Database;
 
-namespace RoundTheClock.Core.Database
+namespace RoundTheClock.Core.Repository
 {
     public class UnitOfWork
     {
         private readonly DbConnection _dbConnection;
 
-        public UnitOfWork(string connectionString)
+        public UnitOfWork(DbConnection dbConnection)
         {
-            _dbConnection = new DbConnection(connectionString);
+            _dbConnection = dbConnection;
         }
 
         /// <summary>
@@ -33,7 +34,7 @@ namespace RoundTheClock.Core.Database
             }
         }
 
-        public int Insert(List<TimeEntry> entries)
+        public int Insert(IEnumerable<TimeEntry> entries)
         {
             int noRows = 0;
             using (var conn = _dbConnection.Connection)

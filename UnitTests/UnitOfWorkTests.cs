@@ -25,7 +25,7 @@ namespace RoundTheClock.UnitTests
             var _connectionString = ConfigurationManager.ConnectionStrings["dbConnection"].ConnectionString;
             _fullConnectionString = "Data Source=" + Path.Combine(Environment.CurrentDirectory, _connectionString);
 
-            _unitOfWork = new UnitOfWork(_connectionString);
+            _unitOfWork = new UnitOfWork(new DbConnection(_fullConnectionString));
 
             // Does not make Insert() test redundant as this checks through _unitOfWork
             SetUpTables();
