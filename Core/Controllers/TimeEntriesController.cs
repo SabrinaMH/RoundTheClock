@@ -14,8 +14,8 @@ namespace RoundTheClock.Controllers
         public IHttpActionResult Post(IEnumerable<TimeEntry> entries)
         {
             var unitOfWork = new UnitOfWork(new DbConnection(Helpers.ConnectionHelper.ConnectionString));
-            var noRows = unitOfWork.Insert(entries);
-            return noRows == entries.Count() ? Ok() : Bad
+            int noRows = unitOfWork.Insert(entries);
+            return Ok(noRows);
             }
         }
     }
