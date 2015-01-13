@@ -1,8 +1,28 @@
 module.exports = function(grunt){
 	grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
 		jshint: {
-			all: ['Gruntfile.js']
+			all: ['Gruntfile.js', 'actions/*.js', 'components/js/*.js', 'stores/*.js' ]
 		},
+		react: {
+            jsx: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'components',
+                        src: [ '*.jsx' ],
+                        dest: 'components/js',
+                        ext: '.js'
+                    }
+                ]
+            }
+        },
+        watch: {
+            react: {
+                files: 'components/*.jsx',
+                tasks: ['react']
+            }
+        },
 		concat: {
 			options: {
 				separator: ';'

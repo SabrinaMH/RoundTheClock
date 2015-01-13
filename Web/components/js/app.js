@@ -1,25 +1,25 @@
 (function () {
     'use strict';
     
-    var App = React.createClass({
+    var App = React.createClass({displayName: "App",
         getInitialState: function(){
             return {};
         },
         
         render: function(){
             return (
-                <div>
-                    <header id="header">
-                        <h1>Round the Clock</h1>
-                    </header>
-                </div>
+                React.createElement("div", null, 
+                    React.createElement("header", {id: "header"}, 
+                        React.createElement("h1", null, "Round the Clock")
+                    )
+                )
             );
         }
     });
     
     function render() {
         React.render(
-            <App />,
+            React.createElement(App, null),
             document.getElementById('app')
         )
     }
