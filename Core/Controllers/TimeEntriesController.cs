@@ -1,4 +1,5 @@
-﻿using RoundTheClock.Core.Database;
+
+using RoundTheClock.Core.Database;
 using RoundTheClock.Core.Model;
 using RoundTheClock.Core.Repository;
 using System;

@@ -8,7 +8,7 @@ module.exports = function(grunt){
 				separator: ';'
 			},
 			dist: {
-				src: ['bower_components/flux/dist/Flux.js', 'bower_components/react/react.js'],
+				src: 'assets/libs/!(all).js',
 				dest: 'assets/libs/all.js',
 				nonull: true
 			}
@@ -23,8 +23,8 @@ module.exports = function(grunt){
 					destPrefix: 'assets/libs',		
 				},
 				files: {
-					'flux/Flux.js': 'flux/dist/Flux.js',
-					'react/react.js': 'react/react.js'
+					'reflux.js': 'reflux/dist/reflux.js',
+					'react.js': 'react/react.js'
 				}
 			}
 		}
