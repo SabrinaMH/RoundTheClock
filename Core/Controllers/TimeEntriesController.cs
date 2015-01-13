@@ -17,7 +17,6 @@ namespace RoundTheClock.Controllers
             var unitOfWork = new UnitOfWork(new DbConnection(Helpers.ConnectionHelper.ConnectionString));
             int noRows = unitOfWork.Insert(entries);
             return Ok(noRows);
-            }
         }
     }
 }

@@ -75,9 +75,9 @@
   </ProjectExtensions>
   <ItemGroup>
     <Content Include="Web.config" />
+    <Content Include="stores\timeEntryStore.js" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dispatchers\appDispatcher.js" />
     <Content Include="assets\libs\all.js" />
   </ItemGroup>
   <ItemGroup>
@@ -87,10 +87,17 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <None Include="components\app.jsx" />
+    <None Include="components\timeEntryView.jsx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ItemGroup>
+    <Folder Include="stores\" />
+    <Folder Include="actions\" />
+    <Folder Include="components\" />
+  </ItemGroup>
 </Project>
