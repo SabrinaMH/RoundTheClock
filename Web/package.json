@@ -1,0 +1,30 @@
+{
+  "name": "Web",
+  "version": "1.0.0",
+  "description": "Time registration web application",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "grunt": "^0.4.5",
+    "grunt-bower-concat": "^0.4.0",
+    "load-grunt-tasks": "^1.0.0"
+  },
+  "devDependencies": {
+    "grunt-bowercopy": "^1.2.0",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-jshint": "^0.10.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SabrinaMH/RoundTheClock.git"
+  },
+  "author": "Sabrina Munch Hansen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SabrinaMH/RoundTheClock/issues"
+  },
+  "homepage": "https://github.com/SabrinaMH/RoundTheClock"
+}
+

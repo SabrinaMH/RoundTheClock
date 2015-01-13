@@ -1,0 +1,23 @@
+{
+  "name": "Web",
+  "version": "0.0.1",
+  "homepage": "https://github.com/SabrinaMH/RoundTheClock",
+  "authors": [
+    "SabrinaMH <sabrina_privat@hotmail.com>"
+  ],
+  "description": "RoundTheClock project",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "~0.12.2"
+  }
+}
