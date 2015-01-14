@@ -21,5 +21,7 @@
     "react": "~0.12.2",
     "reflux": "~0.2.3"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "bootstrap-sass-official": "~3.3.1"
+  }
 }

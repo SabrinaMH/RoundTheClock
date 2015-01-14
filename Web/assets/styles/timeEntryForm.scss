@@ -1,0 +1,9 @@
+#timeEntryForm {
+    label, input {
+        display: block;
+    }
+
+    .column {
+        @extend .col-md-6;
+    }
+}

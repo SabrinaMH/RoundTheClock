@@ -76,9 +76,15 @@
   <ItemGroup>
     <Content Include="Web.config" />
     <Content Include="stores\timeEntryStore.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="assets\libs\all.js" />
+    <Content Include="assets\js\all.js" />
+    <Content Include="assets\styles\main.scss" />
+    <Content Include="assets\styles\timeEntryForm.scss" />
+    <Content Include="assets\styles\_bootstrap.scss" />
+    <Content Include="assets\styles\bootstrap\_grid.scss" />
+    <Content Include="assets\styles\bootstrap\mixins\_clearfix.scss" />
+    <Content Include="assets\styles\bootstrap\mixins\_grid-framework.scss" />
+    <Content Include="assets\styles\bootstrap\mixins\_grid.scss" />
+    <Content Include="assets\styles\bootstrap\_variables.scss" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Web.Debug.config">
@@ -90,14 +96,14 @@
     <None Include="components\app.jsx" />
     <None Include="components\timeEntryView.jsx" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ItemGroup>
     <Folder Include="stores\" />
     <Folder Include="actions\" />
     <Folder Include="components\" />
+    <Folder Include="assets\styles\" />
+    <Folder Include="assets\styles\bootstrap\" />
+    <Folder Include="assets\styles\bootstrap\mixins\" />
   </ItemGroup>
 </Project>
