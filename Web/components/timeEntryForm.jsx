@@ -2,32 +2,48 @@ var app = app || {};
 
 (function(){
     'use strict';
-
+  $(function () {
+    $('#datePicker').datetimepicker({
+        pickTime: false
+    });
+});
     app.TimeEntryForm = React.createClass({
+
+        // this code should probably be put inside componentDidMount or something like that
+        //   $(function () {
+        //		$('#datetimepicker5').datetimepicker({
+        //			pickTime: false
+        //		});
+        //	});
+
         render: function(){
             return (
-                <form id="timeEntryForm">
-                    <div class="column">
-                        <label for="project">Project</label>
-                        <input name="project" type="text" value="" />
+                <form id="timeEntryForm" className="container">
+                    <div className="row form-group">
+                        <div className="column">
+                            <input className="form-control" placeholder="Project" type="text" />
+                        </div>
+                        <div className="column">
+                            <input className="form-control" placeholder="Task" type="text" />
+                        </div>
+                        <div className="column">
+                            <div id="datePicker">
+                                <input className="form-control" placeholder="Date" type="text" data-date-format="DD/MM/YYYY" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div className="column">
+                            <input className="form-control" placeholder="To" type="text" />
+                        </div>
+                        <div className="column">
+                            <input className="form-control" placeholder="From" type="text" />
+                        </div>
                     </div>
-                    <div class="column">
-                        <label for="task">Task</label>
-                        <input name="task" type="text" value="" />
+                    <div className="row form-group rightAligned">
+                        <button className="btn" type="submit">Save</button>
                     </div>
-                    <div class="column">
-                        <label for="date">Date</label>
-                        <input name="date" type="text" value="" />
-                    </div>
-                    <div class="column">
-                        <label for="to">To</label>
-                        <input name="to" type="text" value="" />
-                    </div>
-                    <div class="column">
-                        <label for="from">From</label>
-                        <input name="from" type="text" value="" />
-                    </div>
-                    <button type="submit">Save</button>
                 </form>
             );
         }

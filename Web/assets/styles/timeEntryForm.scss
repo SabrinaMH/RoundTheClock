@@ -1,9 +1,10 @@
 #timeEntryForm {
-    label, input {
-        display: block;
+    .column {
+        @extend .col-md-2;
     }
 
-    .column {
-        @extend .col-md-6;
+    .rightAligned {
+        @extend .col-md-1;
+        @extend .col-md-offset-11;
     }
 }
