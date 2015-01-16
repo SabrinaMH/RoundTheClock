@@ -9,7 +9,7 @@ var app = app || {};
         render: function(){
             return (
                 React.createElement("div", null, 
-                    React.createElement("header", null, 
+                    React.createElement("header", {className: "headline"}, 
                         React.createElement("h1", null, "Round the Clock")
                     ), 
                     React.createElement("section", null, 

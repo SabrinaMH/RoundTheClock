@@ -8,37 +8,32 @@ var app = app || {};
     });
 });
     app.TimeEntryForm = React.createClass({
-
-        // this code should probably be put inside componentDidMount or something like that
-        //   $(function () {
-        //		$('#datetimepicker5').datetimepicker({
-        //			pickTime: false
-        //		});
-        //	});
-
         render: function(){
             return (
                 <form id="timeEntryForm" className="container">
                     <div className="row form-group">
                         <div className="column">
-                            <input className="form-control" placeholder="Project" type="text" />
+                            <select className="selectpicker show-tick" title='Project'>
+                                <option>test</option>
+                                <option>dsdas</option>
+                            </select>
                         </div>
                         <div className="column">
                             <input className="form-control" placeholder="Task" type="text" />
                         </div>
                         <div className="column">
-                            <div id="datePicker">
-                                <input className="form-control" placeholder="Date" type="text" data-date-format="DD/MM/YYYY" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
+                            <div id="datePicker" className="input-group date">
+                                <input className="form-control" placeholder="Date" type="text" required />
+                                <span className="input-group-addon">
+                                    <span className="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
                         </div>
                         <div className="column">
-                            <input className="form-control" placeholder="To" type="text" />
+                            <input className="form-control" placeholder="To" type="time" required />
                         </div>
                         <div className="column">
-                            <input className="form-control" placeholder="From" type="text" />
+                            <input className="form-control" placeholder="From" type="time" required />
                         </div>
                     </div>
                     <div className="row form-group rightAligned">

@@ -1,5 +1,5 @@
 // Core variables and mixins
-@import "variables";
+@import "_variables";
 //@import "bootstrap/mixins";
 @import "mixins/_grid";
 @import "mixins/_grid-framework";
@@ -11,26 +11,33 @@
 @import "mixins/_forms";
 @import "mixins/_center-block";
 @import "mixins/_hide-text";
+@import "mixins/_border-radius";
+@import "mixins/_image";
+@import "mixins/_nav-divider";
+@import "mixins/_reset-filter";
+@import "mixins/_text-emphasis";
+@import "mixins/_background-variant";
+@import "mixins/_text-overflow";
 
 // Reset and dependencies
-//@import "bootstrap/normalize";
+@import "_normalize";
 //@import "bootstrap/print";
-//@import "bootstrap/glyphicons";
+@import "_glyphicons";
 
 // Core CSS
-//@import "bootstrap/scaffolding";
-//@import "bootstrap/type";
+@import "_scaffolding";
+@import "type";
 //@import "bootstrap/code";
-@import "grid";
+@import "_grid";
 //@import "bootstrap/tables";
-@import "forms";
-@import "buttons";
+@import "_forms";
+@import "_buttons";
 
 // Components
 //@import "bootstrap/component-animations";
-//@import "bootstrap/dropdowns";
+@import "_dropdowns";
 //@import "bootstrap/button-groups";
-//@import "bootstrap/input-groups";
+@import "_input-groups";
 //@import "bootstrap/navs";
 //@import "bootstrap/navbar";
 //@import "bootstrap/breadcrumbs";
@@ -56,5 +63,5 @@
 //@import "bootstrap/carousel";
 
 // Utility classes
-@import "utilities";
+@import "_utilities";
 //@import "bootstrap/responsive-utilities";

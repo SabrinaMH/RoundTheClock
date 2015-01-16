@@ -1,10 +1,11 @@
 #timeEntryForm {
     .column {
-        @extend .col-md-2;
+        @extend .col-md-15;
     }
 
     .rightAligned {
         @extend .col-md-1;
-        @extend .col-md-offset-11;
+        @extend .pull-right;
+        @extend .text-right;
     }
 }

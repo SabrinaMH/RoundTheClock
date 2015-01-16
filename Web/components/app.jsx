@@ -9,7 +9,7 @@ var app = app || {};
         render: function(){
             return (
                 <div>
-                    <header>
+                    <header className="headline">
                         <h1>Round the Clock</h1>
                     </header>
                     <section>

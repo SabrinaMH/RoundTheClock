@@ -11,9 +11,9 @@ module.exports = function(grunt){
                 },
                 files: [{
                     expand: true,
-                    cwd: 'assets/styles',
+                    cwd: 'assets/css',
                     src: [ 'main.scss' ],
-                    dest: 'assets/styles',
+                    dest: 'assets/css',
                     ext: '.css'
                 }]
             }
@@ -35,7 +35,7 @@ module.exports = function(grunt){
                 tasks: ['react']
             },
             sass: {
-                files: [ 'assets/styles/*.scss', 'assets/styles/bootstrap/*.scss' ],
+                files: [ 'assets/css/*.scss', 'assets/css/others/*.scss', 'assets/css/bootstrap/*.scss' ],
                 tasks: ['sass']
             },
             jshint: {
