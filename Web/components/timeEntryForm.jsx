@@ -2,24 +2,23 @@ var app = app || {};
 
 (function(){
     'use strict';
-  $(function () {
-    $('#datePicker').datetimepicker({
-        pickTime: false
-    });
-});
+
     app.TimeEntryForm = React.createClass({
         render: function(){
             return (
                 <form id="timeEntryForm" className="container">
                     <div className="row form-group">
                         <div className="column">
-                            <select className="selectpicker show-tick" title='Project'>
+                            <select className="form-control" required>
+                                <option value="" default>Project</option>
                                 <option>test</option>
                                 <option>dsdas</option>
                             </select>
                         </div>
                         <div className="column">
-                            <input className="form-control" placeholder="Task" type="text" />
+                            <select className="form-control">
+                                <option value="" default>Task</option>
+                            </select>
                         </div>
                         <div className="column">
                             <div id="datePicker" className="input-group date">
@@ -30,10 +29,10 @@ var app = app || {};
                             </div>
                         </div>
                         <div className="column">
-                            <input className="form-control" placeholder="To" type="time" required />
+                            <input className="form-control" placeholder="To" type="text" required />
                         </div>
                         <div className="column">
-                            <input className="form-control" placeholder="From" type="time" required />
+                            <input className="form-control" placeholder="From" type="text" required />
                         </div>
                     </div>
                     <div className="row form-group rightAligned">
