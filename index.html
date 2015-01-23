@@ -4,24 +4,12 @@
         <meta charset="utf-8" />
         <title>Round the Clock</title>
 
-        <link href="assets/css/main.css" rel="stylesheet" type="text/css" />
+        <link href="css/main.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <section id="app"></section>
 
-        <!-- Libraries -->
-        <script src="assets/js/all.js"></script>
-
-        <!-- Components -->
-        <script src="components/js/timeEntryForm.js"></script>
-        <script src="components/js/customerSelector.js"></script>
-        <script src="components/js/app.js"></script>
-
-        <!-- Stores -->
-        <script src="stores/timeEntryStore.js"></script>
-
-        <!-- Actions -->
-        <script src="actions/timeEntryAction.js"></script>
-
+        <script src="js/nonBrowserifiedVendors.js"></script> <!-- possible to put this into browserify, just haven't had time to look at how -->
+        <script src="js/bundle.js"></script>
     </body>
 </html>
