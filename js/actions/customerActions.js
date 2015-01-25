@@ -1,18 +1,14 @@
-(function(){
-    'use strict';
+'use strict';
 
-//    var CustomerAPI = require('./CustomerAPI');
-//
-//    var CustomerActions = Reflux.createActions({
-//        'load',
-//        'loadComplete',
-//        'loadError'
-//    });
-//
-//    CustomerActions.load.preEmit = function(){
-//        CustomerAPI.load()
-//            .then(CustomerActions.loadComplete)
-//            .catch(CustomerActions.loadError);
-//    }
+var appDispatcher = require('../dispatcher/appDispatcher');
+var constants = require('../constants/constants');
 
-})();
+var customerActions = {
+	customerSelected: function(customer){
+		appDispatcher.dispatch({
+			actionType: constants.CUSTOMER_SELECTED
+		});
+	}
+};
+
+module.exports = customerActions;

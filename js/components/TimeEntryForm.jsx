@@ -1,17 +1,16 @@
+/*global $:false */
+
+'use strict';
+
 var React = require('react');
 
 var TimeEntryForm = React.createClass({
 
-// need this TODO SMH
-//$('#datetimepicker1').datetimepicker();
-//
-//
-           //// $(function () {
-           ////     $('#datetimepicker3').datetimepicker({
-           //        // format: 'DD-MM-YYYY';
-           //     });
-           // });
-
+    componentDidMount: function(){
+        $('#datePicker').datetimepicker({
+            format: 'DD-MM-YYYY'
+        });
+    },
 
     render: function(){
         return (
