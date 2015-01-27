@@ -1,34 +1,34 @@
 'use strict';
 
 var React = require('react');
-var ReactPropTypes = React.PropTypes;
-var customerStore = require('./../../stores/customerStore');
+var customerActions = require('./../../actions/customerActions');
 
 var CustomerSelector = React.createClass({displayName: "CustomerSelector",
-
-    propTypes: {
-        customers: ReactPropTypes.object.isRequired
+    handleCustomerSelected: function(event){
+        customerActions.customerSelected(event.target.value);
     },
 
     render: function(){
-        console.log("In render function of CustomerSelector. customers: " + customers);
-        if (Object.keys(this.props.customers).length < 1){
+        console.log("In render function of CustomerSelector");
+        console.dir(this.props.customers);
+
+        var customers = this.props.customers;
+        if (Object.keys(customers).length < 1){
             return null;
         }
 
-        var customers = this.props.customers;
         var customersHtml = [];
-
-        for (var key in customers){
-            customersHtml.push(React.createElement("option", null, customers[key].name));
-        }
+        customers.forEach(function(customer) {
+            customersHtml.push(React.createElement("option", {key: customer.Name}, customer.Name));
+        });
 
         return (
             React.createElement("form", {className: "container"}, 
                 React.createElement("div", {className: "row form-group"}, 
                     React.createElement("div", {className: "col-md-15"}, 
-                        React.createElement("select", {className: "form-control", required: true}), 
+                        React.createElement("select", {className: "form-control", name: "select-customer", onChange: "this.handleCustomerSelected", required: true}, 
                             customersHtml 
+                        )
                     )
                 )
             )

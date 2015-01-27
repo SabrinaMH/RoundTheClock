@@ -6,7 +6,8 @@ var constants = require('../constants/constants');
 var customerActions = {
 	customerSelected: function(customer){
 		appDispatcher.dispatch({
-			actionType: constants.CUSTOMER_SELECTED
+			actionType: constants.CUSTOMER_SELECTED,
+			data: customer
 		});
 	}
 };

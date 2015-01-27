@@ -8,14 +8,16 @@ var webApiActions = require('./../../actions/webApiActions');
 
 function getCustomerState(){
     return {
-        customers: customerStore.getState()
+        customers: customerStore.getCustomers(),
+        selectedCustomer: customerStore.getSelected()
     };
 }
 
 var App = React.createClass({
 
     getInitialState: function(){
-        console.log("Return value from customerStore.getState(): " + customerStore.getState());
+        console.log("Return value from customerStore.getCustomers(): ");
+        console.dir(customerStore.getCustomers());
         return getCustomerState();
     },
 
@@ -40,13 +42,11 @@ var App = React.createClass({
                     <h1>Round the Clock</h1>
                 </header>
                 <section>
-                    <CustomerSelector 
-                        customers={this.state.customers} 
-                    />
+                    <CustomerSelector customers={this.state.customers} />
                 </section>
-                //<section>
-                //    <TimeEntryForm />
-                //</section>
+                <section>
+                    <TimeEntryForm selectedCustomer={this.state.selectedCustomer} />
+                </section>
             </div>
         );
     }

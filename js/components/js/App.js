@@ -8,14 +8,16 @@ var webApiActions = require('./../../actions/webApiActions');
 
 function getCustomerState(){
     return {
-        customers: customerStore.getState()
+        customers: customerStore.getCustomers(),
+        selectedCustomer: customerStore.getSelected()
     };
 }
 
 var App = React.createClass({displayName: "App",
 
     getInitialState: function(){
-        console.log("Return value from customerStore.getState(): " + customerStore.getState());
+        console.log("Return value from customerStore.getCustomers(): ");
+        console.dir(customerStore.getCustomers());
         return getCustomerState();
     },
 
@@ -40,13 +42,11 @@ var App = React.createClass({displayName: "App",
                     React.createElement("h1", null, "Round the Clock")
                 ), 
                 React.createElement("section", null, 
-                    React.createElement(CustomerSelector, {
-                        customers: this.state.customers}
-                    )
+                    React.createElement(CustomerSelector, {customers: this.state.customers})
                 ), 
-                "//", React.createElement("section", null, 
-                "//    ", React.createElement(TimeEntryForm, null), 
-                "//")
+                React.createElement("section", null, 
+                    React.createElement(TimeEntryForm, {selectedCustomer: this.state.selectedCustomer})
+                )
             )
         );
     }

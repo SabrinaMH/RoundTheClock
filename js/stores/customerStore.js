@@ -7,18 +7,30 @@ var assign = require('../../bower_components/object-assign/index');
 
 var CHANGE_EVENT = 'change';
 
-var _state = {};
+var _customers = {}, _selected = null;
 
 function persistData(customers){
-	_state = customers;
-	console.log("customerStore received customers: " + customers);
+	_customers = customers;
+	console.log("customerStore received customers: ");
+	console.dir(customers);
+}
+
+function setSelected(customer){
+	_selected = customer;
+	console.log("customerStore selected customer: ");
+	console.dir(customer);
 }
 
 var customerStore = assign({}, eventEmitter.prototype, {
 
-	getState: function(){
-		console.log("In customerStore method: getState");
-		return _state;
+	getCustomers: function(){
+		console.log("In customerStore method: getCustomers");
+		return _customers;
+	},
+
+	getSelected: function(){
+		console.log("In customerStore method: getSelected");
+		return _selected;
 	},
 
 	emitChange: function(){
@@ -36,16 +48,21 @@ var customerStore = assign({}, eventEmitter.prototype, {
 });
 
 appDispatcher.register(function(action){
-	console.log("customerStore received action: " + action);
-	switch(constants.actionType){
+	console.log("customerStore received action: ");
+	console.dir(action);
+	switch(action.actionType){
 		case constants.GET_CUSTOMERS_SUCCESS:
+			console.log("Action GET_CUSTOMERS_SUCCESS");
 			persistData(action.data);
-			customerStore.emitChange();
 			break;
-
+		case constants.CUSTOMER_SELECTED:
+			console.log("Action CUSTOMER_SELECTED");
+			setSelected(action.data);
+			break;
 		default: 
-			break;
+			return; // Only emit change if action was recognized.
 	}
+	customerStore.emitChange();
 });
 
 module.exports = customerStore;

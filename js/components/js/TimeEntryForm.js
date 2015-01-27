@@ -13,14 +13,26 @@ var TimeEntryForm = React.createClass({displayName: "TimeEntryForm",
     },
 
     render: function(){
+        console.log("this.props in TimeEntryForm:");
+        console.dir(this.props);
+        
+        var projects = this.props.selectedCustomer.Projects;
+        if (!projects || Object.keys(projects).length < 1){
+            return null;
+        }
+
+        var projectsHtml = [];
+        projects.forEach(function(project){
+            projectsHtml.push(React.createElement("option", {key: "{project.Name}"}, project.Name));
+        });
+
         return (
             React.createElement("form", {id: "timeEntryForm", className: "container"}, 
                 React.createElement("div", {className: "row form-group"}, 
                     React.createElement("div", {className: "column"}, 
                         React.createElement("select", {className: "form-control", required: true}, 
                             React.createElement("option", {value: "", default: true}, "Project"), 
-                            React.createElement("option", null, "test"), 
-                            React.createElement("option", null, "dsdas")
+                            projectsHtml 
                         )
                     ), 
                     React.createElement("div", {className: "column"}, 

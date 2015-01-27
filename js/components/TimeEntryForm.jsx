@@ -13,14 +13,26 @@ var TimeEntryForm = React.createClass({
     },
 
     render: function(){
+        console.log("this.props in TimeEntryForm:");
+        console.dir(this.props);
+        
+        var projects = this.props.selectedCustomer.Projects;
+        if (!projects || Object.keys(projects).length < 1){
+            return null;
+        }
+
+        var projectsHtml = [];
+        projects.forEach(function(project){
+            projectsHtml.push(<option key="{project.Name}">{project.Name}</option>);
+        });
+
         return (
             <form id="timeEntryForm" className="container">
                 <div className="row form-group">
                     <div className="column">
                         <select className="form-control" required>
                             <option value="" default>Project</option>
-                            <option>test</option>
-                            <option>dsdas</option>
+                            { projectsHtml }
                         </select>
                     </div>
                     <div className="column">
