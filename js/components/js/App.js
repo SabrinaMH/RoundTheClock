@@ -36,6 +36,16 @@ var App = React.createClass({displayName: "App",
     },
 
     render: function(){
+        console.log("in App.js render function. selectedCustomer:");
+        console.dir(this.state.selectedCustomer);
+        var timeEntryForm = null;
+        if (this.state.selectedCustomer && this.state.selectedCustomer.Projects){
+            timeEntryForm =                 
+                React.createElement("section", null, 
+                    React.createElement(TimeEntryForm, {projects: this.state.selectedCustomer.Projects})
+                );
+        }
+
         return (
             React.createElement("div", null, 
                 React.createElement("header", {className: "headline"}, 
@@ -44,9 +54,7 @@ var App = React.createClass({displayName: "App",
                 React.createElement("section", null, 
                     React.createElement(CustomerSelector, {customers: this.state.customers})
                 ), 
-                React.createElement("section", null, 
-                    React.createElement(TimeEntryForm, {selectedCustomer: this.state.selectedCustomer})
-                )
+                timeEntryForm 
             )
         );
     }

@@ -11,7 +11,7 @@ var webApiActions = {
 			console.log("dispatching");
 			appDispatcher.dispatch({
 				actionType: constants.GET_CUSTOMERS_SUCCESS,
-				data: data.Customer
+				data: data
 			});
 		}, function(error){
 			appDispatcher.dispatch({

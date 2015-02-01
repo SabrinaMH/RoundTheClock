@@ -36,6 +36,16 @@ var App = React.createClass({
     },
 
     render: function(){
+        console.log("in App.js render function. selectedCustomer:");
+        console.dir(this.state.selectedCustomer);
+        var timeEntryForm = null;
+        if (this.state.selectedCustomer && this.state.selectedCustomer.Projects){
+            timeEntryForm =                 
+                <section>
+                    <TimeEntryForm projects={this.state.selectedCustomer.Projects} />
+                </section>;
+        }
+
         return (
             <div>
                 <header className="headline">
@@ -44,9 +54,7 @@ var App = React.createClass({
                 <section>
                     <CustomerSelector customers={this.state.customers} />
                 </section>
-                <section>
-                    <TimeEntryForm selectedCustomer={this.state.selectedCustomer} />
-                </section>
+                { timeEntryForm }
             </div>
         );
     }

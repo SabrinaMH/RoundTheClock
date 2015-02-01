@@ -4,8 +4,11 @@ var React = require('react');
 var customerActions = require('./../../actions/customerActions');
 
 var CustomerSelector = React.createClass({
-    handleCustomerSelected: function(event){
-        customerActions.customerSelected(event.target.value);
+    handleCustomerChanged: function(event){
+        console.log("EVENT:");
+        console.dir(event);
+        console.dir(event.target.value);
+        customerActions.customerChanged(event.target.value);
     },
 
     render: function(){
@@ -19,14 +22,14 @@ var CustomerSelector = React.createClass({
 
         var customersHtml = [];
         customers.forEach(function(customer) {
-            customersHtml.push(<option key={customer.Name}>{customer.Name}</option>);
+            customersHtml.push(<option value={customer.Name} key={customer.Name}>{customer.Name}</option>);
         });
 
         return (
             <form className="container">
                 <div className="row form-group">
                     <div className="col-md-15">
-                        <select className="form-control" name="select-customer" onChange="this.handleCustomerSelected" required>
+                        <select className="form-control" name="select-customer" onChange={this.handleCustomerChanged} required>
                             { customersHtml }
                         </select>
                     </div>

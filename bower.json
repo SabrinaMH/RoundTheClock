@@ -23,7 +23,8 @@
     "bootstrap-sass-official": "~3.3.1",
     "bootstrap-select": "~1.6.3",
     "flux": "~2.0.2",
-    "object-assign": "~2.0.0"
+    "object-assign": "~2.0.0",
+    "underscore": "~1.7.0"
   },
   "resolutions": {
     "eonasdan-bootstrap-datetimepicker": "~4.0.0"

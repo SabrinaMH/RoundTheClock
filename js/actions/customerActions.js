@@ -4,10 +4,10 @@ var appDispatcher = require('../dispatcher/appDispatcher');
 var constants = require('../constants/constants');
 
 var customerActions = {
-	customerSelected: function(customer){
+	customerChanged: function(customerName){
 		appDispatcher.dispatch({
-			actionType: constants.CUSTOMER_SELECTED,
-			data: customer
+			actionType: constants.CUSTOMER_CHANGED,
+			data: customerName
 		});
 	}
 };
