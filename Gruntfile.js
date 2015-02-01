@@ -2,7 +2,13 @@ module.exports = function(grunt){
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         jshint: {
-            files: [ 'Gruntfile.js', 'js/actions/*.js', 'js/components/*.js', 'js/stores/*.js' ]
+            options: {
+                ignores: [ 'js/bundle.js', 'js/nonBrowserifiableVendors.js' ],
+                browserify: true,
+                browser: true,
+                devel: true
+            },
+            files: [ 'Gruntfile.js', 'js/**/*.js', '!js/app.js' ]
         },
         sass: {
             dist: {
@@ -22,40 +28,40 @@ module.exports = function(grunt){
             jsx: {
                 files: [{
                     expand: true,
-                    cwd: 'js/components/jsx',
-                    src: '*.jsx',
-                    dest: 'js/components',
+                    cwd: 'js/components',
+                    src: ['*.jsx'],
+                    dest: 'js/components/js',
                     ext: '.js'
                 }]
             }
         },
         browserify: {
-            main: {
+            bundle: {
                 options: {
                     transform: ['debowerify'],
                     browserifyOptions: {
                         debug: true
                     }
                 },
-                src: 'js/components/App.js',
+                src: 'js/app.js',
                 dest: 'js/bundle.js'
             }
         },
         watch: {
             sass: {
-                files: [ 'css/*.scss', 'css/others/*.scss', 'css/bootstrap/*.scss' ],
+                files: [ 'css/**/*.scss' ],
                 tasks: ['sass']
             },
             react: {
-                files: 'js/components/jsx/*.jsx',
+                files: 'js/components/*.jsx',
                 tasks: ['react']
             },
             jshint: {
-                files: ['<%= jshint.files %>'],
+                files: ['<%= jshint.files %>', '!js/bundle.js'],
                 tasks: ['jshint']
             },
             browserify: {
-                files: [ 'js/actions/*.js', 'js/stores/*.js', 'js/components/*.js', 'js/dispatcher/*.js' ],
+                files: [ 'bower_components/**/*.js', 'js/**/*.js', '!js/bundle.js' ], // Ignore the file that browserify creates, as it otherwise loops
                 tasks: ['browserify']
             }
         },
@@ -67,31 +73,15 @@ module.exports = function(grunt){
             },
             dist: {
                 src: [
-                    'bower_components/jquery/dist/jquery.js', // min version not working
+                    'bower_components/jquery/dist/jquery.js', // minified version not working
                     'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js',
                     'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js',
                     'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js',
                     'bower_components/moment/min/moment.min.js',
                     'bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js'
                 ],
-                dest: 'js/nonBrowserifiedVendors.js',
+                dest: 'js/nonBrowserifiableVendors.js',
                 nonull: true
-            }
-        },
-        // No longer in use.
-        bowercopy: {
-            options: {
-                runBower: false,
-                srcPrefix: 'bower_components'
-            },
-            js: {
-                options: {
-                    destPrefix: 'js'
-                },
-                files: {
-                    'flux.js': 'flux/dist/Flux.js',
-                    'react.js': 'react/react.js'
-                }
             }
         }
     });

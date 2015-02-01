@@ -3,13 +3,13 @@
 var appDispatcher = require('../dispatcher/appDispatcher');
 var constants = require('../constants/constants');
 
-var customerActions = {
-	customerChanged: function(customerName){
+var timeEntryActions = {
+	projectChanged: function(projectName){
 		appDispatcher.dispatch({
-			actionType: constants.CUSTOMER_CHANGED,
-			data: customerName
+			actionType: constants.PROJECT_CHANGED,
+			data: projectName
 		});
 	}
 };
 
-module.exports = customerActions;
+module.exports = timeEntryActions;

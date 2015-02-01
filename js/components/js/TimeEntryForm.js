@@ -1,32 +1,67 @@
+/*global $:false */
+
+'use strict';
+
 var React = require('react');
+var timeEntryActions = require('./../../actions/timeEntryActions');
+var timeEntryStore = require('./../../stores/timeEntryStore');
+
+function getTaskState(){
+    return {
+        tasks: timeEntryStore.getTasks()
+    };
+}
 
 var TimeEntryForm = React.createClass({displayName: "TimeEntryForm",
 
-// need this TODO SMH
-//$('#datetimepicker1').datetimepicker();
-//
-//
-           //// $(function () {
-           ////     $('#datetimepicker3').datetimepicker({
-           //        // format: 'DD-MM-YYYY';
-           //     });
-           // });
+    getInitialState: function(){
+        return getTaskState();
+    },
 
+    componentDidMount: function(){
+        $('#datePicker').datetimepicker({
+            format: 'DD-MM-YYYY'
+        });
+        timeEntryStore.addChangeListener(this._onChange);
+    },
+
+    componentWillUnmount: function(){
+        timeEntryStore.removeChangeListener(this._onChange);
+    },
+
+    _onChange: function(){
+        this.setState(getTaskState());
+    },
+
+    handleProjectChanged: function(event){
+        timeEntryActions.projectChanged(event.target.value);
+    },
 
     render: function(){
+        console.log("this.props in TimeEntryForm:");
+        console.dir(this.props);
+
+        var projectsHtml = [];
+        this.props.projects.forEach(function(project){
+            projectsHtml.push(React.createElement("option", {key: project.Name}, project.Name));
+        });
+
+        var tasksHtml = [];
+        this.state.tasks.forEach(function(task){
+            tasksHtml.push(React.createElement("option", {key: task.Name}, task.Name));
+        });
+
         return (
             React.createElement("form", {id: "timeEntryForm", className: "container"}, 
                 React.createElement("div", {className: "row form-group"}, 
                     React.createElement("div", {className: "column"}, 
-                        React.createElement("select", {className: "form-control", required: true}, 
-                            React.createElement("option", {value: "", default: true}, "Project"), 
-                            React.createElement("option", null, "test"), 
-                            React.createElement("option", null, "dsdas")
+                        React.createElement("select", {className: "form-control", onChange: this.handleProjectChanged, required: true}, 
+                            projectsHtml 
                         )
                     ), 
                     React.createElement("div", {className: "column"}, 
-                        React.createElement("select", {className: "form-control"}, 
-                            React.createElement("option", {value: "", default: true}, "Task")
+                        React.createElement("select", {className: "form-control", required: true}, 
+                            tasksHtml 
                         )
                     ), 
                     React.createElement("div", {className: "column"}, 

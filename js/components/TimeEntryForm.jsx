@@ -1,32 +1,67 @@
+/*global $:false */
+
+'use strict';
+
 var React = require('react');
+var timeEntryActions = require('./../../actions/timeEntryActions');
+var timeEntryStore = require('./../../stores/timeEntryStore');
+
+function getTaskState(){
+    return {
+        tasks: timeEntryStore.getTasks()
+    };
+}
 
 var TimeEntryForm = React.createClass({
 
-// need this TODO SMH
-//$('#datetimepicker1').datetimepicker();
-//
-//
-           //// $(function () {
-           ////     $('#datetimepicker3').datetimepicker({
-           //        // format: 'DD-MM-YYYY';
-           //     });
-           // });
+    getInitialState: function(){
+        return getTaskState();
+    },
 
+    componentDidMount: function(){
+        $('#datePicker').datetimepicker({
+            format: 'DD-MM-YYYY'
+        });
+        timeEntryStore.addChangeListener(this._onChange);
+    },
+
+    componentWillUnmount: function(){
+        timeEntryStore.removeChangeListener(this._onChange);
+    },
+
+    _onChange: function(){
+        this.setState(getTaskState());
+    },
+
+    handleProjectChanged: function(event){
+        timeEntryActions.projectChanged(event.target.value);
+    },
 
     render: function(){
+        console.log("this.props in TimeEntryForm:");
+        console.dir(this.props);
+
+        var projectsHtml = [];
+        this.props.projects.forEach(function(project){
+            projectsHtml.push(<option key={project.Name}>{project.Name}</option>);
+        });
+
+        var tasksHtml = [];
+        this.state.tasks.forEach(function(task){
+            tasksHtml.push(<option key={task.Name}>{task.Name}</option>);
+        });
+
         return (
             <form id="timeEntryForm" className="container">
                 <div className="row form-group">
                     <div className="column">
-                        <select className="form-control" required>
-                            <option value="" default>Project</option>
-                            <option>test</option>
-                            <option>dsdas</option>
+                        <select className="form-control" onChange={this.handleProjectChanged} required>
+                            { projectsHtml }
                         </select>
                     </div>
                     <div className="column">
-                        <select className="form-control">
-                            <option value="" default>Task</option>
+                        <select className="form-control" required>
+                            { tasksHtml }
                         </select>
                     </div>
                     <div className="column">
