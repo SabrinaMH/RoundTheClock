@@ -3,36 +3,35 @@
 var React = require('react');
 var CustomerSelector = require('./CustomerSelector');
 var TimeEntryForm = require('./TimeEntryForm');
-var customerStore = require('./../../stores/customerStore');
+var appStore = require('./../../stores/appStore');
 var webApiActions = require('./../../actions/webApiActions');
 
-function getCustomerState(){
+function getState(){
     return {
-        customers: customerStore.getCustomers(),
-        selectedCustomer: customerStore.getSelected()
+        customers: appStore.getCustomers(),
+        selectedCustomer: appStore.getSelectedCustomer()
     };
 }
 
 var App = React.createClass({
 
     getInitialState: function(){
-        console.log("Return value from customerStore.getCustomers(): ");
-        console.dir(customerStore.getCustomers());
-        return getCustomerState();
+        console.dir(appStore.getCustomers());
+        return getState();
     },
 
     componentDidMount: function(){
         console.log("In componentDidMount in App.js");
-        customerStore.addChangeListener(this._onChange);
+        appStore.addChangeListener(this._onChange);
         webApiActions.getCustomers();
     },
 
     componentWillUnmount: function(){
-        customerStore.removeChangeListener(this._onChange);
+        appStore.removeChangeListener(this._onChange);
     },
 
     _onChange: function(){
-        this.setState(getCustomerState());
+        this.setState(getState());
     },
 
     render: function(){

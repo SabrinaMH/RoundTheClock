@@ -5,5 +5,6 @@ module.exports = keymirror({
 	GET_CUSTOMERS_SUCCESS: null,
 	GET_CUSTOMERS_ERROR: null,
 	
-	PROJECT_CHANGED: null
+	PROJECT_CHANGED: null,
+	PROJECTS_CHANGED: null
 });

@@ -3,17 +3,16 @@
 'use strict';
 
 var React = require('react');
+var appStore = require('./../../stores/appStore');
 var timeEntryActions = require('./../../actions/timeEntryActions');
-var timeEntryStore = require('./../../stores/timeEntryStore');
 
 function getTaskState(){
     return {
-        tasks: timeEntryStore.getTasks()
+        tasks: appStore.getTasks()
     };
 }
 
 var TimeEntryForm = React.createClass({
-
     getInitialState: function(){
         return getTaskState();
     },
@@ -22,33 +21,38 @@ var TimeEntryForm = React.createClass({
         $('#datePicker').datetimepicker({
             format: 'DD-MM-YYYY'
         });
-        timeEntryStore.addChangeListener(this._onChange);
+        appStore.addChangeListener(this._onChange);
     },
 
     componentWillUnmount: function(){
-        timeEntryStore.removeChangeListener(this._onChange);
+        appStore.removeChangeListener(this._onChange);
     },
+
+/*
+    // Used to update the stores list of projects
+    componentWillReceiveProps: function(newProps){
+        timeEntryActions.projectsChanged(newProps.projects);
+    },
+*/
 
     _onChange: function(){
         this.setState(getTaskState());
     },
 
     handleProjectChanged: function(event){
+        console.log("In handleProjectChanged");
         timeEntryActions.projectChanged(event.target.value);
     },
 
     render: function(){
-        console.log("this.props in TimeEntryForm:");
-        console.dir(this.props);
-
         var projectsHtml = [];
         this.props.projects.forEach(function(project){
-            projectsHtml.push(<option key={project.Name}>{project.Name}</option>);
+            projectsHtml.push(<option value={project.Name} key={project.Name}>{project.Name}</option>);
         });
 
         var tasksHtml = [];
         this.state.tasks.forEach(function(task){
-            tasksHtml.push(<option key={task.Name}>{task.Name}</option>);
+            tasksHtml.push(<option value={task.Name} key={task.Name}>{task.Name}</option>);
         });
 
         return (

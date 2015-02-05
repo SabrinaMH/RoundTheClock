@@ -9,6 +9,13 @@ var timeEntryActions = {
 			actionType: constants.PROJECT_CHANGED,
 			data: projectName
 		});
+	},
+
+	projectsChanged: function(projects){
+		appDispatcher.dispatch({
+			actionType: constants.PROJECTS_CHANGED,
+			data: projects
+		});
 	}
 };
 
