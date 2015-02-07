@@ -16,12 +16,10 @@ function getState(){
 var App = React.createClass({
 
     getInitialState: function(){
-        console.dir(appStore.getCustomers());
         return getState();
     },
 
     componentDidMount: function(){
-        console.log("In componentDidMount in App.js");
         appStore.addChangeListener(this._onChange);
         webApiActions.getCustomers();
     },
@@ -35,8 +33,6 @@ var App = React.createClass({
     },
 
     render: function(){
-        console.log("in App.js render function. selectedCustomer:");
-        console.dir(this.state.selectedCustomer);
         var timeEntryForm = null;
         if (this.state.selectedCustomer && this.state.selectedCustomer.Projects){
             timeEntryForm =                 

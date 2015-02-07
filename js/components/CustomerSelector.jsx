@@ -5,16 +5,10 @@ var customerActions = require('./../../actions/customerActions');
 
 var CustomerSelector = React.createClass({
     handleCustomerChanged: function(event){
-        console.log("EVENT:");
-        console.dir(event);
-        console.dir(event.target.value);
         customerActions.customerChanged(event.target.value);
     },
 
     render: function(){
-        console.log("In render function of CustomerSelector");
-        console.dir(this.props.customers);
-
         var customers = this.props.customers;
         if (Object.keys(customers).length < 1){
             return null;

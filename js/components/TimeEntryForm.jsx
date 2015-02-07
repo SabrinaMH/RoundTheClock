@@ -40,7 +40,6 @@ var TimeEntryForm = React.createClass({
     },
 
     handleProjectChanged: function(event){
-        console.log("In handleProjectChanged");
         timeEntryActions.projectChanged(event.target.value);
     },
 
