@@ -16,6 +16,19 @@ var timeEntryActions = {
 			actionType: constants.PROJECTS_CHANGED,
 			data: projects
 		});
+	},
+
+	formChanged: function(formChange){
+		appDispatcher.dispatch({
+			actionType: constants.FORM_CHANGED,
+			data: formChange
+		});
+	},
+
+	save: function(){
+		appDispatcher.dispatch({
+			actionType: constants.SAVE_TIME_ENTRY
+		});
 	}
 };
 

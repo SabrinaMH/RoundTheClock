@@ -8,9 +8,19 @@ var _ = require('underscore')._;
 
 var CHANGE_EVENT = 'change';
 
-var _customers = [], _selectedCustomer = null;
-var _projects = [], _selectedProject = null;
-var _tasks = [], _selectedTask = null;
+var _customers = [], _projects = [], _tasks = [];
+var _timeEntry = {
+		customer: null,
+		project: null,
+		task: null,
+		date: null, 
+		to: null, 
+		from: null
+	};
+var _metadata = {
+	error: null,
+	success: null
+};
 
 function setCustomers(customers){
 	_customers = customers;
@@ -20,10 +30,10 @@ function setCustomers(customers){
 }
 
 function setSelectedCustomer(customerName){
-	_selectedCustomer = _.find(_customers, function(customer){
+	_timeEntry.customer = _.find(_customers, function(customer){
 		return customer.Name == customerName;
 	});
-	setProjects(_selectedCustomer.Projects);
+	setProjects(_timeEntry.customer.Projects);
 }
 
 function setProjects(projects){
@@ -34,10 +44,10 @@ function setProjects(projects){
 }
 
 function setSelectedProject(projectName){
-	_selectedProject = _.find(_projects, function(project){
+	_timeEntry.project = _.find(_projects, function(project){
 		return project.Name == projectName;
 	});
-	setTasks(_selectedProject.Tasks);
+	setTasks(_timeEntry.project.Tasks);
 }
 
 function setTasks(tasks){
@@ -48,23 +58,66 @@ function setTasks(tasks){
 }
 
 function setSelectedTask(task){
-	_selectedTask = task;
+	_timeEntry.task = task;
 }
 
+function updateState(formChange){
+	switch(formChange.field){
+		case 'project':
+			setSelectedProject(formChange.value);
+			break;
+		case 'task':
+			setSelectedTask(formChange.value);
+			break;
+		case 'date':
+			_timeEntry.date = formChange.value;
+			break;
+		case 'to':
+			_timeEntry.to = formChange.value;
+			break;
+		case 'from':
+			_timeEntry.from = formChange.value;
+			break;
+		default:
+			return;
+	}
+}
+
+function setError(error){
+	if (error){
+		_metadata.error = error;
+	}
+}
+
+function setSuccess(message){
+	_metadata.success = message;
+}
 
 var appStore = assign({}, eventEmitter.prototype, {
-
 	getCustomers: function(){
 		return _customers;
 	},
 
 	getSelectedCustomer: function(){
-		return _selectedCustomer;
+		return _timeEntry.customer;
 	},
 
 	getTasks: function(){
 		return _tasks;
 	},
+
+	getTimeEntry: function(){
+		console.log("get time entry");
+		return _timeEntry;
+	},
+
+	getError: function(){
+		return _metadata.error;
+	},
+
+	getSuccess: function(){
+		return _metadata.success;
+	}
 
 	emitChange: function(){
 		this.emit(CHANGE_EVENT);
@@ -84,6 +137,9 @@ appDispatcher.register(function(action){
 		case constants.GET_CUSTOMERS_SUCCESS:
 			setCustomers(action.data);
 			break;
+		case constants.GET_CUSTOMERS_ERROR:
+			setError(action.data);
+			break;
 		case constants.CUSTOMER_CHANGED:
 			setSelectedCustomer(action.data);
 			break;
@@ -92,6 +148,15 @@ appDispatcher.register(function(action){
 			break;
 		case constants.PROJECTS_CHANGED:
 			setProjects(action.data);
+			break;
+		case constants.FORM_CHANGED:
+			updateState(action.data);
+			break;
+		case constants.TIME_ENTRY_SAVED:
+			setSuccess("Time entry saved");
+			break;
+		case constants.TIME_ENTRY_SAVED_ERROR:
+			setError(action.data);
 			break;
 		default: 
 			return; // Only emit change if action was recognized.

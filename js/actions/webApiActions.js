@@ -6,9 +6,7 @@ var webApi = require('../utils/webApi');
 
 var webApiActions = {
 	getCustomers: function(){
-		console.log("In webApiActions method: getCustomers");
 		webApi.getCustomers().then(function(data){
-			console.log("dispatching");
 			appDispatcher.dispatch({
 				actionType: constants.GET_CUSTOMERS_SUCCESS,
 				data: data
@@ -16,6 +14,19 @@ var webApiActions = {
 		}, function(error){
 			appDispatcher.dispatch({
 				actionType: constants.GET_CUSTOMERS_ERROR,
+				error: error
+			});
+		});
+	},
+
+	saveTimeEntry: function(timeEntry){
+		webApi.saveTimeEntry(timeEntry).then(function(result){
+			appDispatcher.dispatch({
+				actionType: constants.TIME_ENTRY_SAVED
+			});
+		}, function(error){
+			appDispatcher.dispatch({
+				actionType: constants.TIME_ENTRY_SAVED_ERROR,
 				error: error
 			});
 		});

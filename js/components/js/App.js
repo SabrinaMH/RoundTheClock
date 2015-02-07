@@ -16,12 +16,10 @@ function getState(){
 var App = React.createClass({displayName: "App",
 
     getInitialState: function(){
-        console.dir(appStore.getCustomers());
         return getState();
     },
 
     componentDidMount: function(){
-        console.log("In componentDidMount in App.js");
         appStore.addChangeListener(this._onChange);
         webApiActions.getCustomers();
     },
@@ -35,14 +33,9 @@ var App = React.createClass({displayName: "App",
     },
 
     render: function(){
-        console.log("in App.js render function. selectedCustomer:");
-        console.dir(this.state.selectedCustomer);
         var timeEntryForm = null;
         if (this.state.selectedCustomer && this.state.selectedCustomer.Projects){
-            timeEntryForm =                 
-                React.createElement("section", null, 
-                    React.createElement(TimeEntryForm, {projects: this.state.selectedCustomer.Projects})
-                );
+            timeEntryForm = React.createElement(TimeEntryForm, {projects: this.state.selectedCustomer.Projects});
         }
 
         return (
@@ -50,9 +43,7 @@ var App = React.createClass({displayName: "App",
                 React.createElement("header", {className: "headline"}, 
                     React.createElement("h1", null, "Round the Clock")
                 ), 
-                React.createElement("section", null, 
-                    React.createElement(CustomerSelector, {customers: this.state.customers})
-                ), 
+                React.createElement(CustomerSelector, {customers: this.state.customers}), 
                 timeEntryForm 
             )
         );

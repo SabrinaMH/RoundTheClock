@@ -20,15 +20,17 @@ var CustomerSelector = React.createClass({
         });
 
         return (
-            <form className="container">
-                <div className="row form-group">
-                    <div className="col-md-15">
-                        <select className="form-control" name="select-customer" onChange={this.handleCustomerChanged} required>
-                            { customersHtml }
-                        </select>
+            <section>
+                <form className="container">
+                    <div className="row form-group">
+                        <div className="col-md-15">
+                            <select className="form-control" name="select-customer" onChange={this.handleCustomerChanged} required>
+                                { customersHtml }
+                            </select>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </section>
         );
     }
 });
