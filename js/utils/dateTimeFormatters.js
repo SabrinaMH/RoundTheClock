@@ -4,12 +4,11 @@ var moment = require('moment');
 
 var dateTimeFormatters = {
 	differenceInHours: function(firstTimestamp, lastTimestamp){
-		var duration = moment(firstTimestamp, "HH:mm").diff(moment(lastTimestamp, "HH:mm"));
 		var milliseconds = moment(lastTimestamp, "HH:mm").diff(moment(firstTimestamp, "HH:mm"));
 		return moment.duration(milliseconds).asHours(); // yields decimal value
 	},
 
-	// perhaps useful sometime
+	// perhaps useful at some point
 	timeAsDecimal: function(time){
 		var hoursMinutes = time.split(/[.:]/);
 		var hours = parseInt(hoursMinutes[0], 10);

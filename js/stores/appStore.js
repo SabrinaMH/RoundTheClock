@@ -23,6 +23,8 @@ var _metadata = {
 };
 
 function setCustomers(customers){
+	console.log("setCustomers:");
+	console.dir(customers);
 	_customers = customers;
 	if (_customers.length > 0){
 		setSelectedCustomer(_customers[0].Name);
@@ -37,6 +39,7 @@ function setSelectedCustomer(customerName){
 }
 
 function setProjects(projects){
+	console.log("setProjects");
 	_projects = projects;
 	if (_projects.length > 0){
 		setSelectedProject(_projects[0].Name);
@@ -61,22 +64,25 @@ function setSelectedTask(task){
 	_timeEntry.task = task;
 }
 
-function updateState(formChange){
-	switch(formChange.field){
+function updateState(formData){
+	switch(formData.field){
+		case 'customer':
+			setSelectedCustomer(formData.value);
+			break;
 		case 'project':
-			setSelectedProject(formChange.value);
+			setSelectedProject(formData.value);
 			break;
 		case 'task':
-			setSelectedTask(formChange.value);
+			setSelectedTask(formData.value);
 			break;
 		case 'date':
-			_timeEntry.date = formChange.value;
+			_timeEntry.date = formData.value;
 			break;
 		case 'to':
-			_timeEntry.to = formChange.value;
+			_timeEntry.to = formData.value;
 			break;
 		case 'from':
-			_timeEntry.from = formChange.value;
+			_timeEntry.from = formData.value;
 			break;
 		default:
 			return;
@@ -95,11 +101,13 @@ function setSuccess(message){
 
 var appStore = assign({}, eventEmitter.prototype, {
 	getCustomers: function(){
+		console.log("getCustomers returns ");
+		console.dir(_customers);
 		return _customers;
 	},
 
-	getSelectedCustomer: function(){
-		return _timeEntry.customer;
+	getProjects: function(){
+		return _projects;
 	},
 
 	getTasks: function(){
@@ -117,7 +125,7 @@ var appStore = assign({}, eventEmitter.prototype, {
 
 	getSuccess: function(){
 		return _metadata.success;
-	}
+	},
 
 	emitChange: function(){
 		this.emit(CHANGE_EVENT);
@@ -132,22 +140,13 @@ var appStore = assign({}, eventEmitter.prototype, {
 	}
 });
 
-appDispatcher.register(function(action){
+appStore.dispatchToken = appDispatcher.register(function(action){
 	switch(action.actionType){
 		case constants.GET_CUSTOMERS_SUCCESS:
 			setCustomers(action.data);
 			break;
 		case constants.GET_CUSTOMERS_ERROR:
 			setError(action.data);
-			break;
-		case constants.CUSTOMER_CHANGED:
-			setSelectedCustomer(action.data);
-			break;
-		case constants.PROJECT_CHANGED:
-			setSelectedProject(action.data);
-			break;
-		case constants.PROJECTS_CHANGED:
-			setProjects(action.data);
 			break;
 		case constants.FORM_CHANGED:
 			updateState(action.data);

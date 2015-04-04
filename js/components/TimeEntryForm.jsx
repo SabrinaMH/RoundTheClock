@@ -6,25 +6,26 @@ var React = require('react');
 var appStore = require('./../../stores/appStore');
 var timeEntryActions = require('./../../actions/timeEntryActions');
 var webApiActions = require('./../../actions/webApiActions');
+var DatePicker = require('./DatePicker');
 
 function getState(){
     return {
+        customers: appStore.getCustomers(),
+        projects: appStore.getProjects(),
         tasks: appStore.getTasks(),
         timeEntry: appStore.getTimeEntry(),
         error: appStore.getError(),
         success: appStore.getSuccess()
     };
-}
+} 
 
 var TimeEntryForm = React.createClass({
     getInitialState: function(){
+        webApiActions.getCustomers();
         return getState();
     },
 
     componentDidMount: function(){
-        $('#datePicker').datetimepicker({
-            format: 'DD-MM-YYYY'
-        });
         appStore.addChangeListener(this._onChange);
     },
 
@@ -34,10 +35,6 @@ var TimeEntryForm = React.createClass({
 
     _onChange: function(){
         this.setState(getState());
-    },
-
-    handleProjectChanged: function(event){
-        timeEntryActions.projectChanged(event.target.value);
     },
 
     handleFormChanged: function(event){
@@ -50,13 +47,30 @@ var TimeEntryForm = React.createClass({
         });
     },
 
+    dateChanged: function(date){
+        timeEntryActions.formChanged({
+            field: 'date',
+            value: date
+        });
+    },
+
     save: function(){
         webApiActions.saveTimeEntry(getState().timeEntry);
     },
 
     render: function(){
+        var customers = this.state.customers;
+        if (customers === null || Object.keys(customers).length < 1){
+            return null;
+        }
+
+        var customersHtml = [];
+        customers.forEach(function(customer) {
+            customersHtml.push(<option value={customer.Name} key={customer.Name}>{customer.Name}</option>);
+        });
+
         var projectsHtml = [];
-        this.props.projects.forEach(function(project){
+        this.state.projects.forEach(function(project){
             projectsHtml.push(<option value={project.Name} key={project.Name}>{project.Name}</option>);
         });
 
@@ -75,38 +89,23 @@ var TimeEntryForm = React.createClass({
             successHtml = <p>{this.state.success}</p>;
         }
 
+
         return (
             <section>
-                <form id="timeEntryForm" className="container" onChange={this.handleFormChanged}>
-                    <div className="row form-group">
-                        <div className="column">
-                            <select name="project" className="form-control" onChange={this.handleProjectChanged} required>
-                                { projectsHtml }
-                            </select>
-                        </div>
-                        <div className="column">
-                            <select name="task" className="form-control" required>
-                                { tasksHtml }
-                            </select>
-                        </div>
-                        <div className="column">
-                            <div id="datePicker" className="input-group date">
-                                <input name="date" className="form-control" placeholder="Date" type="text" required />
-                                <span className="input-group-addon">
-                                    <span className="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
-                        </div>
-                        <div className="column">
-                            <input name="to" className="form-control" placeholder="To" type="text" pattern="[0-9]{1,2}(:[0-9]{1,2})?" title="Format xx:xx" required />
-                        </div>
-                        <div className="column">
-                            <input name="from" className="form-control" placeholder="From" type="text" pattern="[0-9]{1,2}(:[0-9]{1,2})?" title="Format xx:xx" required />
-                        </div>
-                    </div>
-                    <div className="row form-group rightAligned">
-                        <button className="btn" type="submit" onClick={this.save}>Save</button>
-                    </div>
+                <form id="time-entry-form" name="testing" onChange={this.handleFormChanged}>
+                    <select name="customer" required>
+                        { customersHtml }
+                    </select>
+                    <select name="project" required>
+                        { projectsHtml }
+                    </select>
+                    <select name="task" required>
+                        { tasksHtml }
+                    </select>
+                    <DatePicker key="datePicker" onChange={this.dateChanged} />
+                    <input name="from" placeholder="From" type="text" pattern="[0-9]{1,2}(:[0-9]{1,2})?" title="Format xx:xx" required />
+                    <input name="to" placeholder="To" type="text" pattern="[0-9]{1,2}(:[0-9]{1,2})?" title="Format xx:xx" required />
+                    <button type="submit" onClick={this.save}>Save</button>
                 </form>
                 { errorHtml }
                 { successHtml }

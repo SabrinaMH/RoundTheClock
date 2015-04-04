@@ -18,10 +18,10 @@
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-sass": "^0.8.1",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-react": "^0.10.0",
+    "grunt-react": "^0.12.1",
     "keymirror": "^0.1.1",
     "load-grunt-tasks": "^1.0.0",
-    "react-tools": "^0.12.2",
+    "react-tools": "^0.13.1",
     "serve-static": "^1.8.1"
   },
   "scripts": {

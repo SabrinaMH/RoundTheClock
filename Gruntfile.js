@@ -49,7 +49,7 @@ module.exports = function(grunt){
         },
         watch: {
             sass: {
-                files: [ 'css/**/*.scss' ],
+                files: [ 'css/*.scss' ],
                 tasks: ['sass']
             },
             react: {
@@ -73,12 +73,8 @@ module.exports = function(grunt){
             },
             dist: {
                 src: [
-                    'bower_components/jquery/dist/jquery.js', // minified version not working
-                    'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/button.js',
-                    'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/collapse.js',
-                    'bower_components/bootstrap-sass-official/assets/javascripts/bootstrap/transition.js',
-                    'bower_components/moment/min/moment.min.js',
-                    'bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js'
+                    //'bower_components/jquery/dist/jquery.js', // minified version not working
+                    'bower_components/moment/min/moment.min.js'
                 ],
                 dest: 'js/nonBrowserifiableVendors.js',
                 nonull: true

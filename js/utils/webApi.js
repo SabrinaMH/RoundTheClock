@@ -1,6 +1,7 @@
 'use strict';
 
 var $ = require('jquery');
+var dateTimeFormatters = require('./dateTimeFormatters');
 
 var webApi = {
 	getCustomers: function(){
@@ -18,14 +19,16 @@ var webApi = {
 			project: timeEntry.project.Name,
 			task: timeEntry.task.Name,
 			date: timeEntry.date,
-			hours: 
+			hours: dateTimeFormatters.differenceInHours(timeEntry.from, timeEntry.to)
+		};
+		// Always return an array even when there's just a single element.
+		if(typeof(date) === 'object'){
+		    data = [data];
 		}
-
-		console.log("POST");
 		return $.ajax({
 			type: 'POST',
 			url: 'http://localhost:50363/TimeEntry',
-			data: JSON.stringify(timeEntry),
+			data: JSON.stringify(data),
 			contentType: 'application/json; charset=utf-8'
 		});
 	}

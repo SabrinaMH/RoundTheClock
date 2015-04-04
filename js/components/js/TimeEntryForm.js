@@ -6,25 +6,26 @@ var React = require('react');
 var appStore = require('./../../stores/appStore');
 var timeEntryActions = require('./../../actions/timeEntryActions');
 var webApiActions = require('./../../actions/webApiActions');
+var DatePicker = require('./DatePicker');
 
 function getState(){
     return {
+        customers: appStore.getCustomers(),
+        projects: appStore.getProjects(),
         tasks: appStore.getTasks(),
         timeEntry: appStore.getTimeEntry(),
         error: appStore.getError(),
         success: appStore.getSuccess()
     };
-}
+} 
 
 var TimeEntryForm = React.createClass({displayName: "TimeEntryForm",
     getInitialState: function(){
+        webApiActions.getCustomers();
         return getState();
     },
 
     componentDidMount: function(){
-        $('#datePicker').datetimepicker({
-            format: 'DD-MM-YYYY'
-        });
         appStore.addChangeListener(this._onChange);
     },
 
@@ -34,10 +35,6 @@ var TimeEntryForm = React.createClass({displayName: "TimeEntryForm",
 
     _onChange: function(){
         this.setState(getState());
-    },
-
-    handleProjectChanged: function(event){
-        timeEntryActions.projectChanged(event.target.value);
     },
 
     handleFormChanged: function(event){
@@ -50,13 +47,30 @@ var TimeEntryForm = React.createClass({displayName: "TimeEntryForm",
         });
     },
 
+    dateChanged: function(date){
+        timeEntryActions.formChanged({
+            field: 'date',
+            value: date
+        });
+    },
+
     save: function(){
         webApiActions.saveTimeEntry(getState().timeEntry);
     },
 
     render: function(){
+        var customers = this.state.customers;
+        if (customers === null || Object.keys(customers).length < 1){
+            return null;
+        }
+
+        var customersHtml = [];
+        customers.forEach(function(customer) {
+            customersHtml.push(React.createElement("option", {value: customer.Name, key: customer.Name}, customer.Name));
+        });
+
         var projectsHtml = [];
-        this.props.projects.forEach(function(project){
+        this.state.projects.forEach(function(project){
             projectsHtml.push(React.createElement("option", {value: project.Name, key: project.Name}, project.Name));
         });
 
@@ -75,41 +89,26 @@ var TimeEntryForm = React.createClass({displayName: "TimeEntryForm",
             successHtml = React.createElement("p", null, this.state.success);
         }
 
+
         return (
             React.createElement("section", null, 
-                React.createElement("form", {id: "timeEntryForm", className: "container", onChange: this.handleFormChanged}, 
-                    React.createElement("div", {className: "row form-group"}, 
-                        React.createElement("div", {className: "column"}, 
-                            React.createElement("select", {name: "project", className: "form-control", onChange: this.handleProjectChanged, required: true}, 
-                                projectsHtml 
-                            )
-                        ), 
-                        React.createElement("div", {className: "column"}, 
-                            React.createElement("select", {name: "task", className: "form-control", required: true}, 
-                                tasksHtml 
-                            )
-                        ), 
-                        React.createElement("div", {className: "column"}, 
-                            React.createElement("div", {id: "datePicker", className: "input-group date"}, 
-                                React.createElement("input", {name: "date", className: "form-control", placeholder: "Date", type: "text", required: true}), 
-                                React.createElement("span", {className: "input-group-addon"}, 
-                                    React.createElement("span", {className: "glyphicon glyphicon-calendar"})
-                                )
-                            )
-                        ), 
-                        React.createElement("div", {className: "column"}, 
-                            React.createElement("input", {name: "to", className: "form-control", placeholder: "To", type: "text", pattern: "[0-9]{1,2}(:[0-9]{1,2})?", title: "Format xx:xx", required: true})
-                        ), 
-                        React.createElement("div", {className: "column"}, 
-                            React.createElement("input", {name: "from", className: "form-control", placeholder: "From", type: "text", pattern: "[0-9]{1,2}(:[0-9]{1,2})?", title: "Format xx:xx", required: true})
-                        )
+                React.createElement("form", {id: "time-entry-form", name: "testing", onChange: this.handleFormChanged}, 
+                    React.createElement("select", {name: "customer", required: true}, 
+                         customersHtml 
                     ), 
-                    React.createElement("div", {className: "row form-group rightAligned"}, 
-                        React.createElement("button", {className: "btn", type: "submit", onClick: this.save}, "Save")
-                    )
+                    React.createElement("select", {name: "project", required: true}, 
+                         projectsHtml 
+                    ), 
+                    React.createElement("select", {name: "task", required: true}, 
+                         tasksHtml 
+                    ), 
+                    React.createElement(DatePicker, {key: "datePicker", onChange: this.dateChanged}), 
+                    React.createElement("input", {name: "from", placeholder: "From", type: "text", pattern: "[0-9]{1,2}(:[0-9]{1,2})?", title: "Format xx:xx", required: true}), 
+                    React.createElement("input", {name: "to", placeholder: "To", type: "text", pattern: "[0-9]{1,2}(:[0-9]{1,2})?", title: "Format xx:xx", required: true}), 
+                    React.createElement("button", {type: "submit", onClick: this.save}, "Save")
                 ), 
-                errorHtml, 
-                successHtml 
+                 errorHtml, 
+                 successHtml 
             )
         );
     }
