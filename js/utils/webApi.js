@@ -7,7 +7,7 @@ var webApi = {
 	getCustomers: function(){
 		return $.ajax({
 			type: 'GET',
-			url: 'http://localhost:9001/Customer',
+			url: 'http://localhost:50363/Customer',
 			dataType: 'json'
 		});
 	},

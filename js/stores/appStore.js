@@ -35,7 +35,7 @@ function setSelectedCustomer(customerName){
 	_timeEntry.customer = _.find(_customers, function(customer){
 		return customer.Name == customerName;
 	});
-	setProjects(_timeEntry.customer.Projects);
+	setProjects(_timeEntry.customer.projects);
 }
 
 function setProjects(projects){
@@ -50,7 +50,7 @@ function setSelectedProject(projectName){
 	_timeEntry.project = _.find(_projects, function(project){
 		return project.Name == projectName;
 	});
-	setTasks(_timeEntry.project.Tasks);
+	setTasks(_timeEntry.project.tasks);
 }
 
 function setTasks(tasks){
