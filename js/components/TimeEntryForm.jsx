@@ -66,17 +66,17 @@ var TimeEntryForm = React.createClass({
 
         var customersHtml = [];
         customers.forEach(function(customer) {
-            customersHtml.push(<option value={customer.Name} key={customer.Name}>{customer.Name}</option>);
+            customersHtml.push(<option value={customer.name} key={customer.name}>{customer.name}</option>);
         });
 
         var projectsHtml = [];
         this.state.projects.forEach(function(project){
-            projectsHtml.push(<option value={project.Name} key={project.Name}>{project.Name}</option>);
+            projectsHtml.push(<option value={project.name} key={project.name}>{project.name}</option>);
         });
 
         var tasksHtml = [];
         this.state.tasks.forEach(function(task){
-            tasksHtml.push(<option value={task.Name} key={task.Name}>{task.Name}</option>);
+            tasksHtml.push(<option value={task.name} key={task.name}>{task.name}</option>);
         });
 
         var errorHtml = null;
